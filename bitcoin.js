@@ -6,6 +6,8 @@ xhttp.onreadystatechange = function () {
         let minDate = null;
         let btcMax = Number.MIN_VALUE;
         let maxDate = null;
+        let lastDate = null;
+        let lastValue = null;
         for (x in JSON.parse(xhttp.responseText).bpi) {
             if (JSON.parse(xhttp.responseText).bpi[x] < btcMin) {
                 btcMin = JSON.parse(xhttp.responseText).bpi[x];
@@ -15,10 +17,12 @@ xhttp.onreadystatechange = function () {
                 btcMax = JSON.parse(xhttp.responseText).bpi[x];
                 maxDate = x;
             }
+            lastDate = x;
+            lastValue = JSON.parse(xhttp.responseText).bpi[x];
         }
         const goldenRatio = (((1 + (5 ** (1 / 2))) / 2) - 1);
         const ratios = [goldenRatio];
-        const numberOfCuts = 10;
+        const numberOfCuts = 9;
         for (let i = 0; i < numberOfCuts; i += 1) {
             const nextGoldenCut = (
                 (
@@ -38,11 +42,24 @@ xhttp.onreadystatechange = function () {
             }
         }
         let tags = '';
-        tags += `<div style="margin:8px;">Max Date: ${maxDate}</div>`;
+        tags += `<div style="margin:8px;">${lastDate}: $${lastValue}</div><hr />`;
+        tags += `<div style="margin:8px;">${maxDate}; $${btcMax}</div><hr />`;
         for (let i = 0; i < ratios.length; i += 1) {
-            tags += `<div style="margin:8px;">$${((ratios[i] * (btcMax - btcMin)) + btcMin).toFixed(2)}</div>`
+            tags += `<div style="margin:8px;">$${
+                ((ratios[i] * (
+                    btcMax - (((ratios[i] * (btcMax - btcMin)) + btcMin))
+                )) + (
+                        ((ratios[0] * (btcMax - btcMin)) + btcMin)
+                    )).toFixed(2)
+                }<span style="margin-left: 8px;">&phi;<sup>-${i + 1}</sup></span></div>`
         }
-        tags += `<div style="margin:8px;">Min Date: ${minDate}</div>`;
+        tags += `<hr />`;
+        for (let i = 0; i < ratios.length; i += 1) {
+            tags += `<div style="margin:8px;">$${
+                ((ratios[i] * (btcMax - btcMin)) + btcMin).toFixed(2)
+                }<span style="margin-left: 8px;">&phi;<sup>${i + 1}</sup></span></div>`
+        }
+        tags += `<hr /><div style="margin:8px;">${minDate}; $${btcMin}</div>`;
         document.getElementById('index').innerHTML = tags;
     }
 };
