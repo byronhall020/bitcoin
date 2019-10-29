@@ -9,12 +9,27 @@
     <meta name="description" content="Bitcoin's annual prices with golden ratio cuts" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src='./bitcoin.js'></script>
 </head>
 
-<body>
+<body onload="updateDaySpread(); getCurrentPrice();">
+    <div class="row m-2">
+        <div class="w-50 row mx-0">
+            <div class="col p-0"><button onclick="updateDaySpread('decrease')">Decrease</button></div>
+            <div class="col p-0 ml-2" id="spread">7</div>
+        </div>
+        <button onclick="updateDaySpread('increase')">Increase</button>
+    </div>
+    <hr />
+    <div class="row m-2">
+        <div class="w-50 row mx-0">
+            <span id="minDate"></span>
+        </div>
+        <span id="maxDate"></span>
+    </div>
+    <hr />
     <span id="currentPrice"></span>
     <span id="index"></span>
-    <script src='./bitcoin.js'></script>
 </body>
 
 </html>
