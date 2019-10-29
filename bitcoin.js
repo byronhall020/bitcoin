@@ -62,7 +62,7 @@ xhttp.onreadystatechange = function () {
 };
 const d = new Date();
 var past = new Date();
-past.setDate(past.getDate() - 30);
+past.setDate(past.getDate() - 7);
 xhttp.open(
     "GET", 
     (
