@@ -20,16 +20,16 @@ const updateDaySpread = (direction) => {
                 lastValue = JSON.parse(xhttp.responseText).bpi[x];
             }
             document.getElementById('minDate').innerHTML = `
-                <span>${
+                <span><span class="d-block">${
                     Object.keys(JSON.parse(xhttp.responseText).bpi)[0]
-                }: ${
-                    JSON.parse(xhttp.responseText).bpi[
+                }</span>$${
+                    (JSON.parse(xhttp.responseText).bpi[
                         Object.keys(JSON.parse(xhttp.responseText).bpi)[0]
-                    ]
+                    ]).toFixed(2)
                 }</span>
             `;
             document.getElementById('maxDate').innerHTML = `
-                <span>${lastDate}: ${lastValue}</span>
+                <span><span class="d-block">${lastDate}</span>$${lastValue.toFixed(2)}</span>
             `;
             const goldenRatio = (((1 + (5 ** (1 / 2))) / 2) - 1);
             const ratios = [goldenRatio];
