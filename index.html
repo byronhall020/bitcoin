@@ -21,15 +21,19 @@
         <button onclick="updateDaySpread('increase')">Increase</button>
     </div>
     <hr />
-    <div class="row m-2">
-        <div class="w-50 row mx-0">
-            <span id="minDate"></span>
-        </div>
-        <span id="maxDate"></span>
-    </div>
-    <hr />
     <span id="currentPrice"></span>
     <span id="index"></span>
+    <script>
+        document.getElementById('spread').innerHTML = (
+            Math.trunc(
+                (
+                    new Date() - (
+                        new Date('Tue Jan 14 2020')
+                    )
+                )/86400000
+            )
+        );
+    </script>
 </body>
 
 </html>
